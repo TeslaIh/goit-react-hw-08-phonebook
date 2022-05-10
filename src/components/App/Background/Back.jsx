@@ -1,9 +1,8 @@
-import animation from './Animation.scss';
+import styled from './Animation.css';
 
-export default function Container({ children }) {
+export default function Container() {
   return (
-    <div type="background" className={animation.Container}>
-      {children}
+    <div className={styled.background}>
       <span></span>
       <span></span>
       <span></span>

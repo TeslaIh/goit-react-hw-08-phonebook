@@ -1,8 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { getIsLoggedIn } from "redux/auth/auth-selectors";
 import { Box, Flex, Link } from '@chakra-ui/react';
 
-export default function Navigation() {
+ function Navigation() {
+  const isLoggedIn = useSelector(getIsLoggedIn);
   return (
     <nav>
       <Flex>
@@ -11,11 +14,13 @@ export default function Navigation() {
             Home
           </Link>
         </Box>
-
-        <Link as={NavLink} to="/contacts" color="blue.500">
-          Contacts
-        </Link>
+        {isLoggedIn && (
+          <Link as={NavLink} to="/contacts" color="blue.500">
+            Contacts
+          </Link>)}
       </Flex>
     </nav>
   );
 }
+
+export default Navigation

@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchContacts,
   addContact,
-} from '../../redux/contacts/contacts-operations';
+} from 'redux/contacts/contacts-operations';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import {
+  FormControl,
   Input,
   Button,
   InputGroup,
@@ -69,8 +70,9 @@ function Form() {
   };
 
   return (
+    <FormControl isRequired>
     <Flex justifyContent="center">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} isRequired>
         <Stack spacing={3} w="400px" mt='10'>
           <InputGroup>
             <InputLeftElement
@@ -87,6 +89,7 @@ function Form() {
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               />
+              
           </InputGroup>
 
           <InputGroup>
@@ -110,7 +113,8 @@ function Form() {
           </Button>
         </Stack>
       </form>
-    </Flex>
+      </Flex>
+      </FormControl>
   );
 }
 

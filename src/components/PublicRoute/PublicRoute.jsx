@@ -6,7 +6,7 @@ const PublicRoute = ({ redirectPath = '/contacts' }) => {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
   if (isLoggedIn) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to={redirectPath} replace />
   }
   return <Outlet />;
 };
