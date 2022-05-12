@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, useEffect, lazy } from 'react';
+import { getIsLoggedIn } from 'redux/auth/auth-selectors';
 import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
 import PublicRoute from 'components/PublicRoute/PublicRoute';
 import { Text, Center } from '@chakra-ui/react';
@@ -16,17 +17,16 @@ const LoginView = lazy(() => import('views/LoginView'));
 const ContactsView = lazy(() => import('views/ContactsView'));
 
 const App = () => {
-  
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const isFetchingCurrentUser = useSelector(
-      state => state.auth.isFetchingCurrentUser
-    );
-    console.log('isFetchingCurrentUser', isFetchingCurrentUser);
+  const isFetchingCurrentUser = useSelector(
+    state => state.auth.isFetchingCurrentUser
+  );
+  console.log('isFetchingCurrentUser', isFetchingCurrentUser);
 
-    useEffect(() => {
-      dispatch(fetchCurrentUser());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
   return (
     <>
       <Background />
@@ -45,6 +45,16 @@ const App = () => {
             <Route element={<ProtectedRoute />}>
               <Route path="contacts" element={<ContactsView />} />
             </Route>
+            <Route
+              path="*"
+              element={
+                getIsLoggedIn ? (
+                  <Navigate to={'/'} restricted />
+                ) : (
+                  <Navigate to={'/contacts'} restricted />
+                )
+              }
+            />
           </Routes>
         </Suspense>
       ) : (
@@ -61,6 +71,6 @@ const App = () => {
       )}
     </>
   );
-}
+};
 
 export default App;
